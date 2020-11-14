@@ -3,6 +3,7 @@ const express = require('express');
 const logger = require('./middleware/logger');
 //require routers
 const trucksRouter = require('./trucks/trucksRouter');
+const usersRouter = require('./users/usersRouter');
 
 
 //new server
@@ -14,6 +15,7 @@ server.use(logger);
 
 //use routers
 server.use('/api/trucks', trucksRouter);
+server.use('/api/users', usersRouter);
 
 
 //default response
