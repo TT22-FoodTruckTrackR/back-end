@@ -4,5 +4,5 @@ const bcrypt = ('bcryptjs');
 module.exports = {
   addNew(){
 
-  },
+  }, 
 }
