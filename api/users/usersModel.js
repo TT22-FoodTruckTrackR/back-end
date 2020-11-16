@@ -26,22 +26,22 @@ async function findById(id){
 
 // ----- addNew(user)
 // ----- requires all user fields
-async function addNew(user){
-  const [id] = await db('diners')
+async function addNew(user, role){
+  const [id] = await db(role)
     .insert(user)
     ;
 
-  return db('diners')
-    .where('diners.id', id)
+  return db(role)
+    .where(id)
     .first()
     ;
 }
 
 // ----- findByName(username, role)
 // ----- requires username, user role diner/operator
-async function findByName(username){
-  return db('diners')
-  .where('diners.username', username)
+async function findByName(username, role){
+  return db(role)
+  .where(username)
   .first()
   ;
 }
