@@ -2,7 +2,7 @@ const db = require('../../data/dbConfig');
 
 module.exports={
   getAll,
-  findById,
+  // findById,
   addNew,
   findByName
 
@@ -17,12 +17,12 @@ async function getAll(role){
 // ----- findById(id, role)
 // ----- requires user id, user role diner/operator
 
-async function findById(id){
-  return db('diners')
-  .where('diners.id', id)
-  .first()
-  ;
-}
+// async function findById(id){
+//   return db('diners')
+//   .where('diners.id', id)
+//   .first()
+//   ;
+// }
 
 // ----- addNew(user)
 // ----- requires all user fields
