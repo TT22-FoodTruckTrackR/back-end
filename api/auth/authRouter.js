@@ -6,6 +6,8 @@ const Users = require('../users/usersModel');
 
 const router = express.Router();
 
+const {jwtSecret} = require('./secrets.js');
+
 // ENDPOINTS
 //-------------------------------------------
 
@@ -86,7 +88,8 @@ router.get('/operators/:username', (req,res)=>{
 router.post('/register/:role',(req,res)=>{
   const role = req.params;
   const newUser = req.body;
-
+  
+  console.log(req.params);
   //theoretical env
   const rounds = process.env.BCRYPT_ROUNDS || 8;
   const hash = bcrypt.hashSync(newUser.password, rounds);
@@ -117,7 +120,6 @@ router.post('/login/:role',(req,res)=>{
     .then(user =>{
       if (user && bcrypt.compareSync(pendingUser.password, user.password)){
         const token = makeJwt(user);
-
         res.status(200).json({message:'Login successful, welcome!', token});
       }else{
         res.status(401).json({message:'invalid credentials'});
@@ -182,14 +184,11 @@ function makeJwt(user){
     role:user.role
   };
 
-  const secret = process.env.JWT_SECRET || 'is it secret, is it safe?';
-  //this is a theoretical env variable, not currently implemented
-
   const options = {
-    expiresIn: '1h'
-  }
+    expiresIn: '25 seconds'
+  };
 
-  return jwt.sign(payload, secret, options)
+  return jwt.sign(payload, jwtSecret, options);
 }
 
 module.exports = router;

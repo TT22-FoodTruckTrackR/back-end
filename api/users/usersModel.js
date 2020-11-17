@@ -2,14 +2,19 @@ const db = require('../../data/dbConfig');
 
 module.exports={
   getAll,
-  // findById,
+  findById,
   addNew,
   findByName
 
 };
 async function getAll(role){
-
-  return db(role);
+  try {
+    return db(role);
+  }catch(err){
+    console.log(err)
+    return err;
+  }
+  
   // console.log('UsersModel test successful');
   // return 'UsersModel test successful';
 }
@@ -17,6 +22,15 @@ async function getAll(role){
 // ----- findById(id, role)
 // ----- requires user id, user role diner/operator
 
+async function findById(id, role){
+  try {
+    return db(role).where(id).first();
+
+  }catch(err){
+    console.log(err)
+    return err;
+  }
+}
 // async function findById(id){
 //   return db('diners')
 //   .where('diners.id', id)
@@ -27,22 +41,41 @@ async function getAll(role){
 // ----- addNew(user)
 // ----- requires all user fields
 async function addNew(user, role){
-  const [id] = await db(role)
-    .insert(user)
-    ;
-
-  return db(role)
-    .where(id)
-    .first()
-    ;
+  // const [id] = await db(role)
+  //   .insert(user)
+  //   ;
+  // return db(role)
+  //   .where(id)
+  //   .first()
+  //   ;
+  try {
+    const [id] = await db(role)
+      .insert(user);
+      try{
+        return findById(id);
+      }catch(err){
+        console.log(err)
+        throw 'Error: Users.addNew';
+      }
+  } catch (err) {
+    console.log(err)
+    throw 'Error: Users.addNew';
+  }
 }
 
 // ----- findByName(username, role)
 // ----- requires username, user role diner/operator
 async function findByName(username, role){
-  return db(role)
-  .where(username)
-  .first()
-  ;
+
+  try {
+    return db(role)
+    .where(username)
+    .first()
+    ;
+
+  }catch(err){
+    console.log(err)
+    throw 'Error: Users.addNew';
+  }
 }
 
