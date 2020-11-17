@@ -1,4 +1,4 @@
-const db = require('../../data/dbConfig');
+// const db = require('../../data/dbConfig');
 
 
 module.exports={
@@ -7,12 +7,12 @@ module.exports={
 }
 
 async function getAllDiners(){
-  try{
-    return db('diners');
-  }catch(err){
-    console.log(err)
-    return err;
-  }
+  // try{
+  //   return db('diners');
+  // }catch(err){
+  //   console.log(err)
+  //   return err;
+  // }
 }
 
 async function getAllOperators(){
@@ -22,8 +22,9 @@ async function getAllOperators(){
   //   console.log(err)
   //   return err;
   // }
-  console.log('Test success')
-  return Promise.resolve('getAllOperators successful')
+  console.log('Test success');
+  return 'getAllOperators successful';
+  // return Promise.resolve('getAllOperators successful');
 }
 
 // ////OLD--------------------------------------------

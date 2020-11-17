@@ -1,12 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
 const Users = require('../users/usersModel');
+const {jwtSecret} = require('./secrets.js');
 
 const router = express.Router();
-
-const {jwtSecret} = require('./secrets.js');
 
 // ENDPOINTS
 //-------------------------------------------
@@ -34,6 +32,7 @@ router.get('/operators', (req, res, next)=>{
   Users.getAllOperators
     .then(data =>{
       res.status(200).json(data)
+      next();
     })
     .catch(err=>{
       console.log(err);
