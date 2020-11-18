@@ -2,8 +2,7 @@
 const express = require('express');
 const logger = require('./middleware/logger');
 //require routers
-const trucksRouter = require('./trucks/trucksRouter');
-const usersRouter = require('./users/usersRouter');
+const authRouter = require('./auth/authRouter');
 
 
 //new server
@@ -14,8 +13,7 @@ server.use(express.json());
 server.use(logger);
 
 //use routers
-server.use('/api/trucks', trucksRouter);
-server.use('/api/users', usersRouter);
+server.use('/api/auth', authRouter);
 
 
 //default response
