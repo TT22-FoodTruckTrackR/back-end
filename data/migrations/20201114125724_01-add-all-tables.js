@@ -17,11 +17,11 @@ exports.up = function(knex) {
         .unique()
       ;
       tbl.text('password')
-        .notNullable();
+        .notNullable()
       ; 
       tbl.text('email')
         .notNullable()
-        .unique();
+        .unique()
       ;
       tbl.text('role')
         .notNullable()
