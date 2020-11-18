@@ -15,7 +15,6 @@ user
   "username":"", string, unique, required
   "password":"", string, required
   "email":"", string, unique, required
-  "role":"", diner or operator, required
   "location":1 integer, optional
 }
 */
@@ -25,20 +24,34 @@ user
 // //TESTING: GET ALL USERS
 // //---------
 
-// //GET /api/auth/operators
+// //GET /api/auth/users
 //---------------------------------
-router.get('/operators', (req, res, next)=>{
-  Users.getAllOperators()
+router.get('/users', (req, res, next)=>{
+  Users.getUsers()
     .then(users => {
       res.status(200).json(users);
       next();
     })
     .catch(err=>{
       console.log(err);
-      res.status(500).json({message:'Server error retrieving operators list'});
+      res.status(500).json({message:'Server error retrieving userlist'});
     })
 });
 
+router.get('/users/:id', (req, res, next)=>{
+  const id = req.params.id;
+
+  Users.getUserById(id)
+    .then(user => {
+      res.status(200).json(user);
+      next();
+    })
+    .catch(err=>{
+      console.log(err);
+      res.status(500).json({message:'Server error retrieving user'});
+    })
+
+})
 
 // //GET /api/auth/diners
 //---------------------------------
@@ -68,8 +81,13 @@ router.post('/register/operators', (req, res, next)=>{
 
   Users.addNewUser(newUser)
     .then(user => {
-      console.log(user)
-      // res.status(201).json(user);
+      // console.log(user)
+      //will console log correct user if no res code
+      //creates user in db succcessfully & returns right id
+
+      // code: 'ERR_HTTP_HEADERS_SENT'
+      // Cannot set headers after they are sent to the client  
+      res.status(201).json(user);
     })
     .catch(err=>{
       console.log(err);

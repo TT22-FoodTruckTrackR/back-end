@@ -3,7 +3,7 @@ const db = require('../../data/dbConfig');
 
 module.exports={
   getUsers,
-  // getUserById,
+  getUserById,
   addNewUser
 }
 
@@ -12,6 +12,12 @@ function getUsers(){
   return db('users');
 }
 
+function getUserById(id){
+  return db('users')
+    .where('users.id',id)
+    .first()
+    ;
+}
 
 //ADD NEW
 async function addNewUser(user){
@@ -22,14 +28,16 @@ async function addNewUser(user){
   //insert user
   const [id] = await db('users').insert(user);
   console.log('----------------');
-  console.log(id);
+  console.log('ID:',id);
   console.log('----------------');
 
-  //return newly created user
-  const created = db('users')
-    .where('users.id',id)
-    .first();
+  return Promise.resolve(getUserById(id));
 
-  console.log({user:created});
-  return Promise.resolve({user:created});
+  // //return newly created user
+  // const created = db('users')
+  //   .where('users.id',id)
+  //   .first();
+
+  // console.log({user:created});
+  // return Promise.resolve({user:created});
 }
