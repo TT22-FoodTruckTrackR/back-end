@@ -1,8 +1,8 @@
 const express = require('express');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const Users = require('../users/usersModel');
-// const {jwtSecret} = require('./secrets.js');
+const {jwtSecret} = require('./secrets.js');
 
 const router = express.Router();
 
@@ -64,6 +64,14 @@ router.get('/diners', (req, res, next)=>{
 //POST /api/auth/register/operators
 //---------------------------------
 router.post('/register/operators', (req, res, next)=>{
+  const newUser = req.body;
+
+  //theoretical env
+  const rounds = process.env.BCRYPT_ROUNDS || 8;
+  const hash = bcrypt.hashSync(newUser.password, rounds);
+  newUser.password = hash;
+
+
   next();
 });
 
@@ -72,6 +80,8 @@ router.post('/register/operators', (req, res, next)=>{
 //POST /api/auth/register/diners
 //---------------------------------
 router.post('/register/diners', (req, res, next)=>{
+  const newUser = req.body;
+  makeJwt(newUser);
   next();
 });
 
@@ -85,6 +95,8 @@ router.post('/register/diners', (req, res, next)=>{
 //POST /api/auth/login/operators
 //---------------------------------
 router.post('/login/operators', (req, res, next)=>{
+  const pendingUser = req.body;
+  makeJwt(pendingUser);
   next();
 });
 
@@ -95,7 +107,25 @@ router.post('/login/operators', (req, res, next)=>{
 //POST /api/auth/login/diners
 //---------------------------------
 router.post('/login/diners', (req, res, next)=>{
+  const pendingUser = req.body;
+  makeJwt(pendingUser);
   next();
 });
 
 
+function makeJwt(user){
+
+  const payload = {
+    subject:user.id,
+    username:user.username,
+    role:user.role
+  };
+
+  const options = {
+    expiresIn: '25 seconds'
+  };
+
+  return jwt.sign(payload, jwtSecret, options);
+}
+
+module.exports = router;
