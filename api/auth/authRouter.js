@@ -81,20 +81,14 @@ router.post('/register/operators', (req, res, next)=>{
 
   Users.addNewUser(newUser)
     .then(user => {
-      // console.log(user)
-      //will console log correct user if no res code
-      //creates user in db succcessfully & returns right id
-
-      // code: 'ERR_HTTP_HEADERS_SENT'
-      // Cannot set headers after they are sent to the client  
       res.status(201).json(user);
+      next();
     })
     .catch(err=>{
       console.log(err);
+
       res.status(500).json({message:'Server error retrieving creating new user'});
     });
-
-  next();
 });
 
 
