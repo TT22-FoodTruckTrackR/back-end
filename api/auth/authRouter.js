@@ -12,11 +12,11 @@ const router = express.Router();
 /*  
 user
 {
-  username: string, unique, required
-  password: string, required
-  email: string, unique, required
-  role: diner or operator, required
-  location: integer, optional
+  "username":"", string, unique, required
+  "password":"", string, required
+  "email":"", string, unique, required
+  "role":"", diner or operator, required
+  "location":1 integer, optional
 }
 */
 
@@ -65,6 +65,15 @@ router.post('/register/operators', (req, res, next)=>{
   const hash = bcrypt.hashSync(newUser.password, rounds);
   newUser.password = hash;
 
+  Users.addNewUser(newUser)
+    .then(user => {
+      console.log(user)
+      // res.status(201).json(user);
+    })
+    .catch(err=>{
+      console.log(err);
+      res.status(500).json({message:'Server error retrieving creating new user'});
+    });
 
   next();
 });
