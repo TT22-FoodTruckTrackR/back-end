@@ -21,12 +21,15 @@ async function addNewUser(user){
 
   //insert user
   const [id] = await db('users').insert(user);
+  console.log('----------------');
+  console.log(id);
+  console.log('----------------');
 
   //return newly created user
   const created = db('users')
     .where('users.id',id)
     .first();
 
-  console.log(created);
-  return created;
+  console.log({user:created});
+  return Promise.resolve({user:created});
 }

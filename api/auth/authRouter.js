@@ -59,6 +59,7 @@ router.get('/diners', (req, res, next)=>{
 //---------------------------------
 router.post('/register/operators', (req, res, next)=>{
   const newUser = req.body;
+  newUser.isOperator = 1;
 
   //theoretical env
   const rounds = process.env.BCRYPT_ROUNDS || 8;
@@ -80,7 +81,7 @@ router.post('/register/operators', (req, res, next)=>{
 
 
 
-//POST /api/auth/register/diners
+//POST /api/auth/register
 //---------------------------------
 router.post('/register/diners', (req, res, next)=>{
 

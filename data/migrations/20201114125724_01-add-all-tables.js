@@ -23,7 +23,8 @@ exports.up = function(knex) {
         .notNullable()
         .unique()
       ;
-      tbl.text('role')
+      tbl.boolean('isOperator')
+        .defaultTo(false)
         .notNullable()
       ;
       tbl.integer('location')
@@ -145,11 +146,11 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists('users')
-    .dropTableIfExists('trucks')
-    .dropTableIfExists('menu_items')
-    .dropTableIfExists('menu_ratings')
-    .dropTableIfExists('owned_trucks')
     .dropTableIfExists('favorite_trucks')
+    .dropTableIfExists('owned_trucks')
+    .dropTableIfExists('menu_ratings')
+    .dropTableIfExists('menu_items')
+    .dropTableIfExists('trucks')
+    .dropTableIfExists('users')
     ;
 };
