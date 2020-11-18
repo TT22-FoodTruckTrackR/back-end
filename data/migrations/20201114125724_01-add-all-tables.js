@@ -1,14 +1,15 @@
-//operators
-//diners
-//trucks
-//operators_trucks
-//diners_trucks
+//01 users
+//02 trucks
+//03 menu_items
+//04 menu_ratings
+//05 owned_trucks
+//06 favorite_trucks
 
 exports.up = function(knex) {
   return knex.schema
 
-    //01-operators
-    .createTable('operators', tbl=>{
+    //01-users
+    .createTable('users', tbl=>{
       tbl.increments()
       ;
       tbl.text('username')
@@ -28,30 +29,8 @@ exports.up = function(knex) {
       tbl.integer('location')
       ;
     })
-
-    //02-diners
-    .createTable('diners', tbl=>{
-      tbl.increments()
-      ;
-      tbl.text('username')
-        .unique()
-        .notNullable()
-      ;
-      tbl.text('password')
-        .notNullable()
-      ;
-      tbl.text('email')
-        .unique()
-        .notNullable()
-      ;
-      tbl.text('role')
-        .notNullable()
-      ;
-      tbl.integer('location')
-      ;
-    })
     
-    //03-trucks
+    //02-trucks
     .createTable('trucks', tbl=>{
       tbl.increments()
       ;
@@ -68,7 +47,7 @@ exports.up = function(knex) {
       ;
     })
 
-    //04-menu_items
+    //03-menu_items
     .createTable('menu_items', tbl=>{
       tbl.increments()
       ;
@@ -91,14 +70,14 @@ exports.up = function(knex) {
       ;
     })
 
-    //05-menu_ratings
+    //04-menu_ratings
     .createTable('menu_ratings', tbl=>{
       tbl.increments()
       ;
-      tbl.integer('diner_id')
+      tbl.integer('user_id')
         //fkey
         .references('id')
-        .inTable('diners')
+        .inTable('users')
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
         .notNullable()
@@ -118,14 +97,14 @@ exports.up = function(knex) {
       ;
     })
 
-    //06-operators_trucks
-    .createTable('operators_trucks',tbl=>{
+    //05-owned_trucks
+    .createTable('owned_trucks',tbl=>{
       tbl.increments()
       ;
-      tbl.integer('operator_id')
+      tbl.integer('user_id')
         //fkey
         .references('id')
-        .inTable('operators')
+        .inTable('users')
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
         .notNullable()
@@ -140,14 +119,14 @@ exports.up = function(knex) {
       ;
     })
 
-    //07-diners_trucks
-    .createTable('diners_trucks',tbl=>{
+    //06-favorite_trucks
+    .createTable('favorite_trucks',tbl=>{
       tbl.increments()
       ;
-      tbl.integer('diner_id')
+      tbl.integer('users_id')
         //fkey
         .references('id')
-        .inTable('diners')
+        .inTable('users')
         .onUpdate('CASCADE')
         .onDelete('CASCADE')
         .notNullable()
@@ -166,12 +145,11 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema
-    .dropTableIfExists('operators')
-    .dropTableIfExists('diners')
+    .dropTableIfExists('users')
     .dropTableIfExists('trucks')
     .dropTableIfExists('menu_items')
     .dropTableIfExists('menu_ratings')
-    .dropTableIfExists('operators_trucks')
-    .dropTableIfExists('diners_trucks')
+    .dropTableIfExists('owned_trucks')
+    .dropTableIfExists('favorite_trucks')
     ;
 };
