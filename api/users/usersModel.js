@@ -1,4 +1,4 @@
-// const db = require('../../data/dbConfig');
+const db = require('../../data/dbConfig');
 
 
 module.exports={
@@ -10,9 +10,6 @@ async function getAllDiners(){
 
 }
 
-async function getAllOperators(){
-
-  console.log('Test success');
-  return 'getAllOperators successful';
-  // return Promise.resolve('getAllOperators successful');
+function getAllOperators(){
+  return db('users');
 }

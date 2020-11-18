@@ -28,30 +28,24 @@ user
 // //GET /api/auth/operators
 //---------------------------------
 router.get('/operators', (req, res, next)=>{
-
-  Users.getAllOperators
-    .then(data =>{
-      res.status(200).json(data)
+  Users.getAllOperators()
+    .then(users => {
+      res.status(200).json(users);
       next();
     })
     .catch(err=>{
       console.log(err);
-      res.status(500).json({message:'Server error getting operators', error:err})
+      res.status(500).json({message:'Server error retrieving operators list'});
     })
-
-  // try{ 
-  //   Users.getAllOperators
-  // }catch(err){
-  //   console.log(err);
-  //   res.json(500).json({message:'Server error returning operators list', error:err})
-  // }
-  // next();
 });
 
 
 // //GET /api/auth/diners
 //---------------------------------
 router.get('/diners', (req, res, next)=>{
+
+  // *** COPY OPERATORS HERE WHEN DONE ****
+
   next();
 });
 
@@ -80,8 +74,9 @@ router.post('/register/operators', (req, res, next)=>{
 //POST /api/auth/register/diners
 //---------------------------------
 router.post('/register/diners', (req, res, next)=>{
-  const newUser = req.body;
-  makeJwt(newUser);
+
+  // *** COPY OPERATORS HERE WHEN DONE ****
+  
   next();
 });
 
@@ -107,8 +102,9 @@ router.post('/login/operators', (req, res, next)=>{
 //POST /api/auth/login/diners
 //---------------------------------
 router.post('/login/diners', (req, res, next)=>{
-  const pendingUser = req.body;
-  makeJwt(pendingUser);
+
+  // *** COPY OPERATORS HERE WHEN DONE ****
+
   next();
 });
 
