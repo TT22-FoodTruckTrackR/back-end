@@ -7,12 +7,6 @@
 //   validLogin
 // }
 
-// function userExists (req,res,next){
-//   next();
-// }
-
-
-
 // function uniqueName (){
 //   // foundUsername = users.getByUsername
 

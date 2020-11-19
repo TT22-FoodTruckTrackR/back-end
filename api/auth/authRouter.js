@@ -86,7 +86,6 @@ router.post('/register/operators', (req, res, next)=>{
     })
     .catch(err=>{
       console.log(err);
-
       res.status(500).json({message:'Server error retrieving creating new user'});
     });
 });
@@ -113,8 +112,24 @@ router.post('/register/diners', (req, res, next)=>{
 //---------------------------------
 router.post('/login/operators', (req, res, next)=>{
   const pendingUser = req.body;
-  makeJwt(pendingUser);
-  next();
+
+  Users.getUserByName(pendingUser.username)
+    .then(dbUser=>{
+      if(dbUser && bcrypt.compareSync(pendingUser.password, dbUser.password)){
+        const token = makeJwt(dbUser);
+        res.status(200).json({message:'Login successful!', token});
+        next();
+      }else {
+        res.status(401).json({message:'Invalid credentials'});
+      }
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({name:err.name, message:err.message, stack:err.stack});
+    });
+
+  // makeJwt(pendingUser);
+  // next();
 });
 
 
